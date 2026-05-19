@@ -1,83 +1,107 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>DeoSignal · Process Anomaly Monitor</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+html,body{margin:0;padding:0;background:#0A0A0A;min-height:100vh}
+*{box-sizing:border-box}
 .db{
   --gold:#C9A84C;--dark2:#1A1A1A;--dark3:#242424;--off-white:#F5F0E8;--muted:#9A9080;
   --teal:#5DCAA5;--red:#F09595;--amber:#EF9F27;--purple:#AFA9EC;
-  background:#0A0A0A;color:#fff;font-family:'Inter',sans-serif;padding:1rem 0 1.5rem;
+  background:#0A0A0A;color:#fff;font-family:'Inter',sans-serif;
+  padding:1rem 1rem 3rem;
+  max-width:600px;margin:0 auto;
 }
+/* TOPBAR */
 .topbar{margin-bottom:1rem;padding-bottom:.9rem;border-bottom:.5px solid rgba(201,168,76,.2)}
-.topbar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.topbar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .brand{display:flex;align-items:center;gap:10px}
-.bmark{width:28px;height:28px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.bmark svg{width:13px;height:13px;fill:none;stroke:var(--gold);stroke-width:1.5}
-.btag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block}
-.bname{font-size:13px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
-.lpill{display:flex;align-items:center;gap:5px;padding:4px 10px;border:.5px solid rgba(201,168,76,.2);background:rgba(201,168,76,.04);font-size:9px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.bmark{width:30px;height:30px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bmark svg{width:14px;height:14px;fill:none;stroke:var(--gold);stroke-width:1.5}
+.btag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:1px}
+.bname{font-size:14px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;line-height:1}
+.lpill{display:flex;align-items:center;gap:5px;padding:4px 10px;border:.5px solid rgba(201,168,76,.2);background:rgba(201,168,76,.04);font-size:9px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
 .ldot{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:blink 2s infinite;flex-shrink:0}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.btn-row{display:flex;gap:6px}
-.dbtn{background:transparent;border:.5px solid rgba(201,168,76,.3);color:var(--gold);font-size:10px;letter-spacing:.05em;padding:7px 14px;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;text-transform:uppercase;min-height:36px;flex:1;white-space:nowrap}
+.btn-row{display:flex;gap:8px}
+.dbtn{background:transparent;border:.5px solid rgba(201,168,76,.35);color:var(--gold);font-size:11px;letter-spacing:.05em;padding:9px 0;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;text-transform:uppercase;min-height:42px;flex:1;white-space:nowrap;-webkit-tap-highlight-color:transparent}
 .dbtn:active{background:rgba(201,168,76,.1)}
+.dbtn i{font-size:15px}
 .dbtn-red{border-color:rgba(240,149,149,.4)!important;color:var(--red)!important}
 .dbtn-red:active{background:rgba(240,149,149,.08)!important}
-.mbar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-bottom:.9rem;background:rgba(201,168,76,.1);border:.5px solid rgba(201,168,76,.15)}
-.mbtn{padding:8px 4px;font-size:9px;letter-spacing:.04em;text-transform:uppercase;font-family:'Inter',sans-serif;cursor:pointer;background:#1A1A1A;color:var(--muted);border:none;transition:all .15s;text-align:center;line-height:1.35;border-bottom:2px solid transparent;min-height:44px}
+/* MODEL BAR */
+.mbar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-bottom:.9rem;background:rgba(201,168,76,.12);border:.5px solid rgba(201,168,76,.2)}
+.mbtn{padding:10px 4px;font-size:10px;letter-spacing:.04em;text-transform:uppercase;font-family:'Inter',sans-serif;cursor:pointer;background:#1A1A1A;color:var(--muted);border:none;border-bottom:2px solid transparent;transition:background .15s;text-align:center;line-height:1.4;min-height:48px;-webkit-tap-highlight-color:transparent}
 .mbtn:active{background:#242424}
-.mbtn.active{background:rgba(201,168,76,.1);color:var(--gold);border-bottom:2px solid var(--gold)}
-.mdesc{font-size:11px;color:var(--muted);background:#1A1A1A;border-left:2px solid var(--gold);padding:8px 12px;margin-bottom:.9rem;line-height:1.6}
+.mbtn.active{background:rgba(201,168,76,.12);color:var(--gold);border-bottom:2px solid var(--gold)}
+.mbtn-sub{font-size:8px;opacity:.55;display:block;margin-top:2px}
+/* MODEL DESC */
+.mdesc{font-size:11px;color:var(--muted);background:#1A1A1A;border-left:2px solid var(--gold);padding:10px 12px;margin-bottom:.9rem;line-height:1.65}
 .mdesc strong{color:var(--off-white)}
+/* KPI ROW */
 .kpi-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;border:.5px solid rgba(201,168,76,.15);margin-bottom:.9rem;background:rgba(201,168,76,.08)}
-.kpi{background:#1A1A1A;padding:.85rem .9rem}
-.kpi-lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
-.kpi-val{font-size:20px;font-weight:700;font-family:'Playfair Display',serif;line-height:1;margin-bottom:.2rem}
-.kpi-sub{font-size:9px;color:var(--muted)}
+.kpi{background:#1A1A1A;padding:.9rem}
+.kpi-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.kpi-val{font-size:24px;font-weight:700;font-family:'Playfair Display',serif;line-height:1;margin-bottom:.25rem}
+.kpi-sub{font-size:10px;color:var(--muted);line-height:1.3}
 .kv-gold{color:var(--gold)}.kv-teal{color:var(--teal)}.kv-amber{color:var(--amber)}.kv-red{color:var(--red)}.kv-muted{color:var(--muted)}.kv-purple{color:var(--purple)}
+/* PANELS */
 .panel{background:#1A1A1A;border:.5px solid rgba(201,168,76,.15);padding:1rem;margin-bottom:.9rem}
-.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;gap:6px;flex-wrap:wrap}
-.ptitle{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:6px}
-.spill{font-size:9px;padding:2px 8px;letter-spacing:.07em;text-transform:uppercase;font-weight:600}
-.pill-nom{background:rgba(93,202,165,.08);color:var(--teal);border:.5px solid rgba(93,202,165,.22)}
-.pill-warn{background:rgba(239,159,39,.08);color:var(--amber);border:.5px solid rgba(239,159,39,.22)}
-.pill-crit{background:rgba(240,149,149,.08);color:var(--red);border:.5px solid rgba(240,149,149,.22)}
-.cgrp{display:flex;align-items:center;gap:7px;width:100%}
-.clbl{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap;flex-shrink:0}
-.dsel{background:#242424;border:.5px solid rgba(201,168,76,.18);color:var(--off-white);font-size:11px;padding:6px 7px;font-family:'Inter',sans-serif;outline:none;flex:1;min-height:36px}
-.cval{font-size:12px;font-weight:600;min-width:32px;color:var(--gold);text-align:right}
-input[type=range]{-webkit-appearance:none;height:4px;background:rgba(201,168,76,.18);outline:none;cursor:pointer;flex:1}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--gold);border:none}
-input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--gold);border:none}
-.ctrl-stack{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:6px}
-.chart-wrap{position:relative;width:100%;height:180px}
-.leg-row{display:flex;gap:10px;flex-wrap:wrap;font-size:9px;color:var(--muted);margin-bottom:6px;letter-spacing:.03em}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;gap:6px;flex-wrap:wrap}
+.ptitle{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:6px}
+.ptitle i{font-size:14px}
+.spill{font-size:9px;padding:3px 9px;letter-spacing:.07em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+.pill-nom{background:rgba(93,202,165,.08);color:var(--teal);border:.5px solid rgba(93,202,165,.25)}
+.pill-warn{background:rgba(239,159,39,.08);color:var(--amber);border:.5px solid rgba(239,159,39,.25)}
+.pill-crit{background:rgba(240,149,149,.08);color:var(--red);border:.5px solid rgba(240,149,149,.25)}
+/* CONTROLS */
+.ctrl-stack{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:4px}
+.cgrp{display:flex;align-items:center;gap:8px;width:100%}
+.clbl{font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);white-space:nowrap;flex-shrink:0;min-width:70px}
+.dsel{background:#242424;border:.5px solid rgba(201,168,76,.2);color:var(--off-white);font-size:12px;padding:7px 8px;font-family:'Inter',sans-serif;outline:none;flex:1;min-height:38px;-webkit-appearance:none}
+.cval{font-size:13px;font-weight:600;min-width:36px;color:var(--gold);text-align:right}
+input[type=range]{-webkit-appearance:none;appearance:none;height:4px;background:rgba(201,168,76,.2);outline:none;cursor:pointer;flex:1;border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);border:none;cursor:pointer}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--gold);border:none;cursor:pointer}
+/* CHART */
+.grule{width:16px;height:1px;background:var(--gold);opacity:.4;display:inline-block;flex-shrink:0}
+.leg-row{display:flex;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin:8px 0 6px;letter-spacing:.03em}
 .li{display:flex;align-items:center;gap:4px}
-.ll{width:14px;height:2px}
-.ld{width:6px;height:6px;border-radius:50%}
-.lr{width:6px;height:6px;transform:rotate(45deg)}
-.alscroll{max-height:160px;overflow-y:auto}
-.alt{width:100%;font-size:10px;border-collapse:collapse}
-.alt th{padding:5px 8px;color:var(--muted);font-weight:500;border-bottom:.5px solid rgba(201,168,76,.12);background:#242424;font-size:9px;letter-spacing:.08em;text-transform:uppercase;text-align:left}
-.alt td{padding:6px 8px;border-bottom:.5px solid rgba(255,255,255,.04);color:var(--off-white);vertical-align:middle}
+.ll{width:14px;height:2px;flex-shrink:0}
+.ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.lr{width:7px;height:7px;transform:rotate(45deg);flex-shrink:0}
+.chart-wrap{position:relative;width:100%;height:200px}
+/* ALERT TABLE */
+.alscroll{max-height:180px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.alt{width:100%;font-size:11px;border-collapse:collapse;table-layout:fixed}
+.alt th{padding:6px 8px;color:var(--muted);font-weight:500;border-bottom:.5px solid rgba(201,168,76,.12);background:#242424;font-size:9px;letter-spacing:.08em;text-transform:uppercase;text-align:left;overflow:hidden}
+.alt td{padding:7px 8px;border-bottom:.5px solid rgba(255,255,255,.04);color:var(--off-white);vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .alt tr:last-child td{border:none}
-.est{padding:20px;text-align:center;color:var(--muted);font-size:11px;font-style:italic}
-.fi{display:flex;align-items:center;gap:7px;margin-bottom:7px}
-.fl{font-size:10px;color:var(--muted);width:105px;flex-shrink:0}
-.ft{flex:1;height:3px;background:rgba(255,255,255,.05)}
-.ff{height:3px;transition:width .4s}
-.fp{font-size:10px;color:var(--gold);min-width:26px;text-align:right;font-weight:500}
-.tsec{border-top:.5px solid rgba(201,168,76,.1);margin-top:11px;padding-top:11px}
-.tlbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.trow{display:flex;align-items:center;gap:7px}
-.tends{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:4px}
-.foot{font-size:9px;color:rgba(154,144,128,.35);text-align:center;margin-top:1rem;letter-spacing:.05em;text-transform:uppercase}
-.grule{width:16px;height:1px;background:var(--gold);opacity:.4;display:inline-block}
+.alt col.c-time{width:22%}.alt col.c-param{width:30%}.alt col.c-score{width:24%}.alt col.c-sev{width:24%}
+.est{padding:22px;text-align:center;color:var(--muted);font-size:11px;font-style:italic}
+/* FEATURE BARS */
+.fi{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.fl{font-size:11px;color:var(--muted);width:120px;flex-shrink:0}
+.ft{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.ff{height:4px;border-radius:2px;transition:width .4s}
+.fp{font-size:11px;color:var(--gold);min-width:28px;text-align:right;font-weight:500}
+/* TUNE SECTION */
+.tsec{border-top:.5px solid rgba(201,168,76,.1);margin-top:12px;padding-top:12px}
+.tlbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.trow{display:flex;align-items:center;gap:8px}
+.tends{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:5px}
+/* FOOTER */
+.foot{font-size:10px;color:rgba(154,144,128,.3);text-align:center;margin-top:1.5rem;padding-bottom:1rem;letter-spacing:.06em;text-transform:uppercase}
 </style>
-
-<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">DeoSignal mobile — pharma-grade process anomaly detection</h2>
-
+</head>
+<body>
 <div class="db">
 
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-top">
     <div class="brand">
@@ -90,70 +114,107 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     <div class="lpill"><span class="ldot"></span>mRNA-7841</div>
   </div>
   <div class="btn-row">
-    <button class="dbtn" onclick="resetSim()"><i class="ti ti-refresh" aria-hidden="true"></i> Reset</button>
-    <button class="dbtn dbtn-red" onclick="injectAnomaly()"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Inject anomaly</button>
+    <button class="dbtn" onclick="resetSim()"><i class="ti ti-refresh"></i> Reset</button>
+    <button class="dbtn dbtn-red" onclick="injectAnomaly()"><i class="ti ti-alert-triangle"></i> Inject anomaly</button>
   </div>
 </div>
 
+<!-- MODEL BAR -->
 <div class="mbar">
-  <button class="mbtn active" onclick="setModel('cusum')" data-m="cusum">CUSUM<br><span style="font-size:8px;opacity:.5">Drift detect</span></button>
-  <button class="mbtn" onclick="setModel('ewma')" data-m="ewma">EWMA<br><span style="font-size:8px;opacity:.5">Weighted avg</span></button>
-  <button class="mbtn" onclick="setModel('hotelling')" data-m="hotelling">Hotelling T²<br><span style="font-size:8px;opacity:.5">Multivariate</span></button>
-  <button class="mbtn" onclick="setModel('pca')" data-m="pca">PCA<br><span style="font-size:8px;opacity:.5">Dim. reduction</span></button>
-  <button class="mbtn" onclick="setModel('montecarlo')" data-m="montecarlo">Monte Carlo<br><span style="font-size:8px;opacity:.5">Yield sim.</span></button>
-  <button class="mbtn" onclick="setModel('bayesian')" data-m="bayesian">Bayesian<br><span style="font-size:8px;opacity:.5">Changepoint</span></button>
+  <button class="mbtn active" onclick="setModel('cusum')" data-m="cusum">CUSUM<span class="mbtn-sub">Drift detect</span></button>
+  <button class="mbtn" onclick="setModel('ewma')" data-m="ewma">EWMA<span class="mbtn-sub">Weighted avg</span></button>
+  <button class="mbtn" onclick="setModel('hotelling')" data-m="hotelling">Hotelling T²<span class="mbtn-sub">Multivariate</span></button>
+  <button class="mbtn" onclick="setModel('pca')" data-m="pca">PCA<span class="mbtn-sub">Dim. reduction</span></button>
+  <button class="mbtn" onclick="setModel('montecarlo')" data-m="montecarlo">Monte Carlo<span class="mbtn-sub">Yield sim.</span></button>
+  <button class="mbtn" onclick="setModel('bayesian')" data-m="bayesian">Bayesian<span class="mbtn-sub">Changepoint</span></button>
 </div>
 
+<!-- MODEL DESC -->
 <div class="mdesc" id="model-desc"><strong>CUSUM</strong> — accumulates deviations from target to detect small sustained drifts. Industry standard for pharma SPC (ICH Q10). C⁺/C⁻ statistics breach decision interval H to flag out-of-control state.</div>
 
+<!-- KPI ROW -->
 <div class="kpi-row">
-  <div class="kpi"><div class="kpi-lbl">Detection score</div><div class="kpi-val kv-gold" id="m-score">—</div><div class="kpi-sub" id="m-score-sub">CUSUM · C⁺/C⁻</div></div>
-  <div class="kpi"><div class="kpi-lbl">Alerts fired</div><div class="kpi-val kv-muted" id="m-alerts">0</div><div class="kpi-sub">This session</div></div>
-  <div class="kpi"><div class="kpi-lbl">False positive rate</div><div class="kpi-val kv-teal" id="m-fpr">0%</div><div class="kpi-sub">Suppressed by tuning</div></div>
-  <div class="kpi"><div class="kpi-lbl">Active model</div><div class="kpi-val kv-purple" style="font-size:12px;padding-top:5px" id="m-model-name">CUSUM</div><div class="kpi-sub" id="m-model-sub">Pharma SPC · ICH Q10</div></div>
+  <div class="kpi">
+    <div class="kpi-lbl">Detection score</div>
+    <div class="kpi-val kv-gold" id="m-score">—</div>
+    <div class="kpi-sub" id="m-score-sub">CUSUM · C⁺/C⁻</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Alerts fired</div>
+    <div class="kpi-val kv-muted" id="m-alerts">0</div>
+    <div class="kpi-sub">This session</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">False positive rate</div>
+    <div class="kpi-val kv-teal" id="m-fpr">0%</div>
+    <div class="kpi-sub">Suppressed by tuning</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Active model</div>
+    <div class="kpi-val kv-purple" style="font-size:14px;padding-top:4px" id="m-model-name">CUSUM</div>
+    <div class="kpi-sub" id="m-model-sub">Pharma SPC · ICH Q10</div>
+  </div>
 </div>
 
+<!-- SIGNAL STREAM PANEL -->
 <div class="panel">
   <div class="ph">
-    <div style="display:flex;align-items:center;gap:8px">
-      <div class="ptitle"><i class="ti ti-chart-line" aria-hidden="true"></i>Signal stream</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <div class="ptitle"><i class="ti ti-chart-line"></i>Signal stream</div>
       <span class="grule"></span>
       <span class="spill pill-nom" id="stream-badge">Nominal</span>
     </div>
   </div>
   <div class="ctrl-stack">
-    <div class="cgrp"><span class="clbl">Param</span><select class="dsel" id="param-select" onchange="switchParam()"><option value="temp">Encapsulation temp (°C)</option><option value="ph">LNP pH</option><option value="size">Particle size (nm)</option><option value="encap">Encapsulation eff. (%)</option></select></div>
-    <div class="cgrp"><span class="clbl" id="thresh-label">H interval</span><input type="range" min="1.5" max="5" step="0.1" value="3" id="thresh-slider" oninput="updateThresh(this.value)"><span class="cval" id="thresh-val">3.0</span></div>
+    <div class="cgrp">
+      <span class="clbl">Parameter</span>
+      <select class="dsel" id="param-select" onchange="switchParam()">
+        <option value="temp">Encapsulation temp (°C)</option>
+        <option value="ph">LNP pH</option>
+        <option value="size">Particle size (nm)</option>
+        <option value="encap">Encapsulation eff. (%)</option>
+      </select>
+    </div>
+    <div class="cgrp">
+      <span class="clbl" id="thresh-label">H interval</span>
+      <input type="range" min="1.5" max="5" step="0.1" value="3" id="thresh-slider" oninput="updateThresh(this.value)">
+      <span class="cval" id="thresh-val">3.0</span>
+    </div>
   </div>
-  <div class="leg-row" id="legend-row" style="margin-top:10px"></div>
-  <div class="chart-wrap"><canvas id="streamChart" role="img" aria-label="Real-time mRNA process parameter with pharma-grade anomaly detection overlay.">Real-time mRNA manufacturing process parameter monitoring.</canvas></div>
+  <div class="leg-row" id="legend-row"></div>
+  <div class="chart-wrap">
+    <canvas id="streamChart" role="img" aria-label="Real-time mRNA process parameter with pharma-grade anomaly detection overlay."></canvas>
+  </div>
 </div>
 
+<!-- ALERT LOG -->
 <div class="panel">
   <div class="ph">
-    <div class="ptitle"><i class="ti ti-list-details" aria-hidden="true"></i>Alert log</div>
-    <span style="font-size:9px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase" id="alert-count-lbl">0 events</span>
+    <div class="ptitle"><i class="ti ti-list-details"></i>Alert log</div>
+    <span style="font-size:10px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase" id="alert-count-lbl">0 events</span>
   </div>
   <div class="alscroll">
     <table class="alt">
+      <colgroup><col class="c-time"/><col class="c-param"/><col class="c-score"/><col class="c-sev"/></colgroup>
       <thead><tr><th>Time</th><th>Param</th><th>Score</th><th>Sev.</th></tr></thead>
       <tbody id="alert-body"><tr><td colspan="4" class="est">No alerts — system nominal</td></tr></tbody>
     </table>
   </div>
 </div>
 
+<!-- SIGNAL WEIGHTS -->
 <div class="panel">
   <div class="ph">
-    <div class="ptitle"><i class="ti ti-chart-bar" aria-hidden="true"></i>Signal weights</div>
+    <div class="ptitle"><i class="ti ti-chart-bar"></i>Signal weights</div>
     <span class="spill pill-nom" id="feat-label">CUSUM</span>
   </div>
   <div id="feat-bars"></div>
   <div class="tsec">
     <div class="tlbl" id="tune-label">Decision interval H</div>
     <div class="trow">
-      <span style="font-size:9px;color:var(--muted)">Tight</span>
+      <span style="font-size:10px;color:var(--muted)">Tight</span>
       <input type="range" min="1.5" max="5" step="0.1" value="3" id="sens-slider" oninput="syncSliders(this.value)">
-      <span style="font-size:9px;color:var(--muted)">Wide</span>
+      <span style="font-size:10px;color:var(--muted)">Wide</span>
       <span class="cval" id="sens-val">3.0</span>
     </div>
     <div class="tends"><span>← More alerts</span><span>Fewer alerts →</span></div>
@@ -165,15 +226,52 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-const PARAMS={temp:{label:'Encap temp (°C)',mean:37.0,std:.4,color:'#C9A84C'},ph:{label:'LNP pH',mean:7.2,std:.08,color:'#5DCAA5'},size:{label:'Particle size (nm)',mean:98,std:3.5,color:'#AFA9EC'},encap:{label:'Encap eff. (%)',mean:88,std:1.2,color:'#E8C96A'}};
-const MODELS={
-  cusum:{name:'CUSUM',sub:'Pharma SPC · ICH Q10',scoreSub:'C⁺ statistic',threshLabel:'Decision interval H',threshMin:1.5,threshMax:5,threshDefault:3,threshStep:.1,desc:'<strong>CUSUM</strong> — accumulates deviations from target to detect small sustained drifts. Industry standard for pharma SPC (ICH Q10). C⁺/C⁻ statistics breach decision interval H to flag out-of-control state.',feats:[{n:'Cumulative deviation',p:.42,c:'#C9A84C'},{n:'Run length',p:.28,c:'#5DCAA5'},{n:'Allowance k',p:.18,c:'#AFA9EC'},{n:'Reset frequency',p:.12,c:'#9A9080'}],legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#EF9F27',label:'C⁺',dash:true},{type:'line',color:'#85B7EB',label:'C⁻',dash:true},{type:'line',color:'rgba(154,144,128,.35)',label:'H boundary',dash:true},{type:'dot',color:'#F09595',label:'Alert'}]},
-  ewma:{name:'EWMA',sub:'Exp. weighting · λ-tunable',scoreSub:'EWMA statistic Z',threshLabel:'Control limit L (×σ)',threshMin:1.5,threshMax:4,threshDefault:2.7,threshStep:.1,desc:'<strong>EWMA</strong> — weights recent observations more heavily via λ=0.2. Sensitive to small persistent mean shifts. Standard in FDA-regulated batch release.',feats:[{n:'Smoothed mean (λ)',p:.45,c:'#C9A84C'},{n:'Recent weight',p:.30,c:'#5DCAA5'},{n:'Variance estimate',p:.15,c:'#AFA9EC'},{n:'Trend component',p:.10,c:'#9A9080'}],legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#5DCAA5',label:'EWMA stat'},{type:'line',color:'rgba(154,144,128,.35)',label:'UCL/LCL',dash:true},{type:'dot',color:'#F09595',label:'Alert'}]},
-  hotelling:{name:'Hotelling T²',sub:'Multivariate SPC',scoreSub:'T² statistic',threshLabel:'UCL χ² threshold',threshMin:5,threshMax:20,threshDefault:11,threshStep:.5,desc:'<strong>Hotelling T²</strong> — multivariate control chart monitoring all four parameters simultaneously, accounting for their correlations. One T² statistic catches anomalies invisible to univariate charts.',feats:[{n:'Temp contribution',p:.31,c:'#C9A84C'},{n:'pH contribution',p:.27,c:'#5DCAA5'},{n:'Size contribution',p:.24,c:'#AFA9EC'},{n:'Encap contribution',p:.18,c:'#E8C96A'}],legend:[{type:'line',color:'#C9A84C',label:'T² stat'},{type:'line',color:'rgba(154,144,128,.35)',label:'UCL (χ²)',dash:true},{type:'dot',color:'#F09595',label:'OOC'}]},
-  pca:{name:'PCA',sub:'SPE residual · dim. reduction',scoreSub:'SPE residual',threshLabel:'SPE threshold',threshMin:1,threshMax:5,threshDefault:2.5,threshStep:.1,desc:'<strong>PCA Anomaly Detection</strong> — projects data onto principal components capturing normal variation. Squared prediction error (SPE) flags observations deviating from the learned normal subspace.',feats:[{n:'PC1 (temp+encap)',p:.48,c:'#C9A84C'},{n:'PC2 (pH+size)',p:.31,c:'#5DCAA5'},{n:'SPE residual',p:.14,c:'#AFA9EC'},{n:'Hotelling in PCA',p:.07,c:'#9A9080'}],legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#AFA9EC',label:'PC1 proj.'},{type:'line',color:'rgba(154,144,128,.35)',label:'SPE limit',dash:true},{type:'dot',color:'#F09595',label:'High SPE'}]},
-  montecarlo:{name:'Monte Carlo',sub:'Yield simulation · N=300',scoreSub:'Yield estimate',threshLabel:'Yield spec limit (%)',threshMin:70,threshMax:95,threshDefault:82,threshStep:1,desc:'<strong>Monte Carlo Yield Simulation</strong> — propagates uncertainty across all process parameters using N=300 stochastic samples per tick. Flags when estimated batch yield approaches the spec limit.',feats:[{n:'Temp uncertainty',p:.33,c:'#C9A84C'},{n:'Encap variability',p:.29,c:'#E8C96A'},{n:'pH sensitivity',p:.22,c:'#5DCAA5'},{n:'Size contribution',p:.16,c:'#AFA9EC'}],legend:[{type:'line',color:'#C9A84C',label:'Yield est.'},{type:'line',color:'rgba(93,202,165,.5)',label:'90% CI'},{type:'line',color:'rgba(239,159,39,.6)',label:'Spec limit',dash:true},{type:'dot',color:'#F09595',label:'Below spec'}]},
-  bayesian:{name:'Bayesian BOCPD',sub:'Run-length posterior',scoreSub:'P(changepoint)',threshLabel:'P(change) threshold',threshMin:.3,threshMax:.9,threshDefault:.55,threshStep:.05,desc:'<strong>Bayesian BOCPD</strong> — maintains a posterior over run-length to detect regime shifts in real time. Distinguishes point anomalies from true process state changes — critical for detecting gradual LNP formation drift.',feats:[{n:'Run-length posterior',p:.38,c:'#C9A84C'},{n:'Mean shift evidence',p:.28,c:'#EF9F27'},{n:'Variance shift',p:.20,c:'#5DCAA5'},{n:'Prior predictive',p:.14,c:'#9A9080'}],legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#EF9F27',label:'P(changepoint)'},{type:'line',color:'rgba(154,144,128,.35)',label:'Threshold',dash:true},{type:'square',color:'#EF9F27',label:'Regime shift'},{type:'dot',color:'#F09595',label:'Point anomaly'}]}
+const PARAMS={
+  temp:{label:'Encap temp (°C)',mean:37.0,std:.4,color:'#C9A84C'},
+  ph:{label:'LNP pH',mean:7.2,std:.08,color:'#5DCAA5'},
+  size:{label:'Particle size (nm)',mean:98,std:3.5,color:'#AFA9EC'},
+  encap:{label:'Encap eff. (%)',mean:88,std:1.2,color:'#E8C96A'}
 };
+
+const MODELS={
+  cusum:{name:'CUSUM',sub:'Pharma SPC · ICH Q10',scoreSub:'C⁺ statistic',
+    threshLabel:'Decision interval H',threshMin:1.5,threshMax:5,threshDefault:3,threshStep:.1,
+    desc:'<strong>CUSUM</strong> — accumulates deviations from target to detect small sustained drifts. Industry standard for pharma SPC (ICH Q10). C⁺/C⁻ statistics breach decision interval H to flag out-of-control state.',
+    feats:[{n:'Cumulative deviation',p:.42,c:'#C9A84C'},{n:'Run length',p:.28,c:'#5DCAA5'},{n:'Allowance k',p:.18,c:'#AFA9EC'},{n:'Reset frequency',p:.12,c:'#9A9080'}],
+    legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#EF9F27',label:'C⁺',dash:true},{type:'line',color:'#85B7EB',label:'C⁻',dash:true},{type:'line',color:'rgba(154,144,128,.35)',label:'H boundary',dash:true},{type:'dot',color:'#F09595',label:'Alert'}],
+    yMin:0,yMax:null},
+  ewma:{name:'EWMA',sub:'Exp. weighting · λ-tunable',scoreSub:'EWMA statistic Z',
+    threshLabel:'Control limit L (×σ)',threshMin:1.5,threshMax:4,threshDefault:2.7,threshStep:.1,
+    desc:'<strong>EWMA</strong> — weights recent observations more heavily via λ=0.2. Sensitive to small persistent mean shifts. Standard in FDA-regulated batch release.',
+    feats:[{n:'Smoothed mean (λ)',p:.45,c:'#C9A84C'},{n:'Recent weight',p:.30,c:'#5DCAA5'},{n:'Variance estimate',p:.15,c:'#AFA9EC'},{n:'Trend component',p:.10,c:'#9A9080'}],
+    legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#5DCAA5',label:'EWMA stat'},{type:'line',color:'rgba(154,144,128,.35)',label:'UCL/LCL',dash:true},{type:'dot',color:'#F09595',label:'Alert'}],
+    yMin:null,yMax:null},
+  hotelling:{name:'Hotelling T²',sub:'Multivariate SPC',scoreSub:'T² statistic',
+    threshLabel:'UCL χ² threshold',threshMin:5,threshMax:20,threshDefault:11,threshStep:.5,
+    desc:'<strong>Hotelling T²</strong> — multivariate control chart monitoring all four parameters simultaneously, accounting for their correlations. One T² statistic catches anomalies invisible to univariate charts.',
+    feats:[{n:'Temp contribution',p:.31,c:'#C9A84C'},{n:'pH contribution',p:.27,c:'#5DCAA5'},{n:'Size contribution',p:.24,c:'#AFA9EC'},{n:'Encap contribution',p:.18,c:'#E8C96A'}],
+    legend:[{type:'line',color:'#C9A84C',label:'T² stat'},{type:'line',color:'rgba(154,144,128,.35)',label:'UCL (χ²)',dash:true},{type:'dot',color:'#F09595',label:'OOC'}],
+    yMin:0,yMax:null},
+  pca:{name:'PCA',sub:'SPE residual · dim. reduction',scoreSub:'SPE residual',
+    threshLabel:'SPE threshold',threshMin:1,threshMax:5,threshDefault:2.5,threshStep:.1,
+    desc:'<strong>PCA Anomaly Detection</strong> — projects data onto principal components capturing normal variation. Squared prediction error (SPE) flags observations deviating from the learned normal subspace.',
+    feats:[{n:'PC1 (temp+encap)',p:.48,c:'#C9A84C'},{n:'PC2 (pH+size)',p:.31,c:'#5DCAA5'},{n:'SPE residual',p:.14,c:'#AFA9EC'},{n:'Hotelling in PCA',p:.07,c:'#9A9080'}],
+    legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#AFA9EC',label:'PC1 proj.'},{type:'line',color:'rgba(154,144,128,.35)',label:'SPE limit',dash:true},{type:'dot',color:'#F09595',label:'High SPE'}],
+    yMin:null,yMax:null},
+  montecarlo:{name:'Monte Carlo',sub:'Yield simulation · N=300',scoreSub:'Yield estimate',
+    threshLabel:'Yield spec limit (%)',threshMin:70,threshMax:95,threshDefault:82,threshStep:1,
+    desc:'<strong>Monte Carlo Yield Simulation</strong> — propagates uncertainty across all process parameters using N=300 stochastic samples per tick. Flags when estimated batch yield approaches the spec limit.',
+    feats:[{n:'Temp uncertainty',p:.33,c:'#C9A84C'},{n:'Encap variability',p:.29,c:'#E8C96A'},{n:'pH sensitivity',p:.22,c:'#5DCAA5'},{n:'Size contribution',p:.16,c:'#AFA9EC'}],
+    legend:[{type:'line',color:'#C9A84C',label:'Yield est.'},{type:'line',color:'rgba(93,202,165,.5)',label:'90% CI'},{type:'line',color:'rgba(239,159,39,.6)',label:'Spec limit',dash:true},{type:'dot',color:'#F09595',label:'Below spec'}],
+    yMin:70,yMax:100},
+  bayesian:{name:'Bayesian BOCPD',sub:'Run-length posterior',scoreSub:'P(changepoint)',
+    threshLabel:'P(change) threshold',threshMin:.3,threshMax:.9,threshDefault:.55,threshStep:.05,
+    desc:'<strong>Bayesian BOCPD</strong> — maintains a posterior over run-length to detect regime shifts in real time. Distinguishes point anomalies from true process state changes — critical for detecting gradual LNP formation drift.',
+    feats:[{n:'Run-length posterior',p:.38,c:'#C9A84C'},{n:'Mean shift evidence',p:.28,c:'#EF9F27'},{n:'Variance shift',p:.20,c:'#5DCAA5'},{n:'Prior predictive',p:.14,c:'#9A9080'}],
+    legend:[{type:'line',color:'#C9A84C',label:'Signal'},{type:'line',color:'#EF9F27',label:'P(changepoint)'},{type:'line',color:'rgba(154,144,128,.35)',label:'Threshold',dash:true},{type:'square',color:'#EF9F27',label:'Regime shift'},{type:'dot',color:'#F09595',label:'Point anomaly'}],
+    yMin:null,yMax:null}
+};
+
 const MAX=60;
 let cp='temp',thr=3,currentModel='cusum';
 let alertLog=[],alertCount=0,totalFired=0,injectNext=false;
@@ -183,6 +281,7 @@ let chart;
 
 function randn(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
 function genPt(p,inj){const pr=PARAMS[p];return inj?pr.mean+randn()*pr.std*(3.8+Math.random()*1.5):pr.mean+randn()*pr.std}
+
 function detect(val){
   const pr=PARAMS[cp];const z=(val-pr.mean)/pr.std;
   switch(currentModel){
@@ -194,6 +293,7 @@ function detect(val){
     case 'bayesian':{bayPChange=Math.min(.99,bayPChange+Math.abs(z)*.04+.005);if(bayPChange>.8)bayPChange=.05;const f=bayPChange>thr;return{score:bayPChange,flag:f,display:bayPChange.toFixed(3),isShift:bayPChange>(thr+.1)}}
   }
 }
+
 function updateLegend(){
   document.getElementById('legend-row').innerHTML=MODELS[currentModel].legend.map(l=>{
     if(l.type==='line')return`<span class="li"><span class="ll" style="${l.dash?'border-top:1.5px dashed '+l.color:'background:'+l.color}"></span>${l.label}</span>`;
@@ -202,13 +302,16 @@ function updateLegend(){
     return'';
   }).join('');
 }
+
 function renderFeats(){
   const m=MODELS[currentModel];
   document.getElementById('feat-bars').innerHTML=m.feats.map(f=>`<div class="fi"><span class="fl">${f.n}</span><div class="ft"><div class="ff" style="width:${Math.round(f.p*100)}%;background:${f.c}"></div></div><span class="fp">${Math.round(f.p*100)}%</span></div>`).join('');
   document.getElementById('feat-label').textContent=m.name;
 }
+
 function makeChart(){
   const ctx=document.getElementById('streamChart').getContext('2d');
+  const md=MODELS[currentModel];
   chart=new Chart(ctx,{type:'line',data:{labels:tData,datasets:[
     {label:'Signal',data:[],borderColor:PARAMS[cp].color,backgroundColor:'transparent',borderWidth:1.5,pointRadius:0,tension:.35,order:3},
     {label:'Aux1',data:[],borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:1.2,borderDash:[3,2],pointRadius:0,tension:.35,order:3},
@@ -218,12 +321,24 @@ function makeChart(){
     {label:'Alert',data:[],borderColor:'transparent',backgroundColor:'#F09595',pointRadius:5,pointStyle:'circle',showLine:false,order:1},
     {label:'Shift',data:[],borderColor:'transparent',backgroundColor:'#EF9F27',pointRadius:6,pointStyle:'rectRot',showLine:false,order:1}
   ]},options:{responsive:true,maintainAspectRatio:false,animation:false,
-    plugins:{legend:{display:false},tooltip:{backgroundColor:'#1A1A1A',borderColor:'rgba(201,168,76,.25)',borderWidth:1,titleColor:'#C9A84C',bodyColor:'#F5F0E8',padding:6}},
-    scales:{x:{display:true,ticks:{maxTicksLimit:5,font:{size:9,family:'Inter'},color:'#9A9080'},grid:{color:'rgba(201,168,76,.04)'},border:{color:'rgba(201,168,76,.1)'}},y:{display:true,ticks:{font:{size:9,family:'Inter'},color:'#9A9080'},grid:{color:'rgba(201,168,76,.04)'},border:{color:'rgba(201,168,76,.1)'}}}}});
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#1A1A1A',borderColor:'rgba(201,168,76,.25)',borderWidth:1,titleColor:'#C9A84C',bodyColor:'#F5F0E8',padding:8}},
+    scales:{
+      x:{display:true,ticks:{maxTicksLimit:5,font:{size:9,family:'Inter'},color:'#9A9080'},grid:{color:'rgba(201,168,76,.04)'},border:{color:'rgba(201,168,76,.1)'}},
+      y:{display:true,min:md.yMin??undefined,max:md.yMax??undefined,ticks:{font:{size:9,family:'Inter'},color:'#9A9080',maxTicksLimit:5},grid:{color:'rgba(201,168,76,.04)'},border:{color:'rgba(201,168,76,.1)'}}
+    }}});
 }
+
+function updateYAxis(){
+  const md=MODELS[currentModel];
+  chart.options.scales.y.min=md.yMin??undefined;
+  chart.options.scales.y.max=md.yMax??undefined;
+}
+
 function tick(){
-  const t=new Date();const ts=t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0')+':'+t.getSeconds().toString().padStart(2,'0');
-  const inj=injectNext;injectNext=false;const val=genPt(cp,inj);const det=detect(val);const pr=PARAMS[cp];
+  const t=new Date();
+  const ts=t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0')+':'+t.getSeconds().toString().padStart(2,'0');
+  const inj=injectNext;injectNext=false;
+  const val=genPt(cp,inj);const det=detect(val);const pr=PARAMS[cp];
   tData.push(ts);d0.push(val);aFlags.push(det.flag);
   switch(currentModel){
     case 'cusum':d1.push(det.aux);d2.push(det.aux2);d3.push(thr);d4.push(0);d5.push(det.flag?{x:ts,y:val}:null);d6.push(null);break;
@@ -248,34 +363,95 @@ function tick(){
   chart.data.datasets[6].hidden=currentModel!=='bayesian';
   chart.data.datasets[0].borderColor=PARAMS[cp].color;
   chart.update('none');
-  if(det.flag){totalFired++;alertCount++;const sev=det.score>(currentModel==='montecarlo'?thr-5:thr*1.3)?'Critical':'Warning';alertLog.unshift({time:ts,param:PARAMS[cp].label.split(' ').slice(0,2).join(' '),score:det.display,sev});if(alertLog.length>20)alertLog.pop();renderAlerts()}
-  const se=document.getElementById('m-score');se.textContent=det.display;se.className='kpi-val '+(det.flag?'kv-red':det.score>(currentModel==='montecarlo'?thr+3:thr*.75)?'kv-amber':'kv-gold');
-  const ae=document.getElementById('m-alerts');ae.textContent=alertCount;ae.className='kpi-val '+(alertCount===0?'kv-teal':alertCount<3?'kv-amber':'kv-red');
+  if(det.flag){
+    totalFired++;alertCount++;
+    const sev=det.score>(currentModel==='montecarlo'?thr-5:thr*1.3)?'Critical':'Warning';
+    alertLog.unshift({time:ts,param:PARAMS[cp].label.split(' ').slice(0,2).join(' '),score:det.display,sev});
+    if(alertLog.length>20)alertLog.pop();
+    renderAlerts();
+  }
+  const se=document.getElementById('m-score');
+  se.textContent=det.display;
+  se.className='kpi-val '+(det.flag?'kv-red':det.score>(currentModel==='montecarlo'?thr+3:thr*.75)?'kv-amber':'kv-gold');
+  const ae=document.getElementById('m-alerts');
+  ae.textContent=alertCount;
+  ae.className='kpi-val '+(alertCount===0?'kv-teal':alertCount<3?'kv-amber':'kv-red');
   document.getElementById('m-fpr').textContent=totalFired>0?Math.round(Math.round(totalFired*.14)/Math.max(totalFired,1)*100)+'%':'0%';
-  const badge=document.getElementById('stream-badge');const sl={'bayesian':'Regime shift','montecarlo':'Yield at risk','hotelling':'Multivariate OOC'}[currentModel]||'Anomaly';
-  if(det.flag){badge.textContent=sl;badge.className='spill pill-crit'}else if(det.score>(currentModel==='montecarlo'?thr+3:thr*.75)){badge.textContent='Elevated';badge.className='spill pill-warn'}else{badge.textContent='Nominal';badge.className='spill pill-nom'}
+  const badge=document.getElementById('stream-badge');
+  const sl={'bayesian':'Regime shift','montecarlo':'Yield at risk','hotelling':'Multivariate OOC'}[currentModel]||'Anomaly';
+  if(det.flag){badge.textContent=sl;badge.className='spill pill-crit'}
+  else if(det.score>(currentModel==='montecarlo'?thr+3:thr*.75)){badge.textContent='Elevated';badge.className='spill pill-warn'}
+  else{badge.textContent='Nominal';badge.className='spill pill-nom'}
 }
+
 function renderAlerts(){
-  const tb=document.getElementById('alert-body');document.getElementById('alert-count-lbl').textContent=alertLog.length+' event'+(alertLog.length!==1?'s':'');
+  const tb=document.getElementById('alert-body');
+  document.getElementById('alert-count-lbl').textContent=alertLog.length+' event'+(alertLog.length!==1?'s':'');
   if(!alertLog.length){tb.innerHTML='<tr><td colspan="4" class="est">No alerts — system nominal</td></tr>';return}
-  tb.innerHTML=alertLog.map(r=>`<tr><td style="font-family:monospace;font-size:9px;color:#9A9080">${r.time}</td><td style="font-size:10px">${r.param}</td><td style="font-weight:600;color:#C9A84C;font-size:10px">${r.score}</td><td><span class="spill ${r.sev==='Critical'?'pill-crit':'pill-warn'}" style="font-size:8px;padding:2px 6px">${r.sev}</span></td></tr>`).join('');
+  tb.innerHTML=alertLog.map(r=>`<tr>
+    <td style="font-family:monospace;font-size:9px;color:#9A9080">${r.time}</td>
+    <td style="font-size:10px">${r.param}</td>
+    <td style="font-weight:600;color:#C9A84C;font-size:10px">${r.score}</td>
+    <td><span class="spill ${r.sev==='Critical'?'pill-crit':'pill-warn'}" style="font-size:9px;padding:2px 6px">${r.sev}</span></td>
+  </tr>`).join('');
 }
+
 function setModel(m){
-  currentModel=m;document.querySelectorAll('.mbtn').forEach(b=>b.classList.toggle('active',b.dataset.m===m));
-  const md=MODELS[m];document.getElementById('model-desc').innerHTML=md.desc;document.getElementById('m-model-name').textContent=md.name;document.getElementById('m-model-sub').textContent=md.sub;document.getElementById('m-score-sub').textContent=md.scoreSub;document.getElementById('thresh-label').textContent=md.threshLabel;document.getElementById('tune-label').textContent=md.threshLabel;
-  thr=md.threshDefault;['thresh-slider','sens-slider'].forEach(id=>{const el=document.getElementById(id);el.min=md.threshMin;el.max=md.threshMax;el.step=md.threshStep;el.value=thr});
-  const dp=thr<5?2:0;['thresh-val','sens-val'].forEach(id=>document.getElementById(id).textContent=thr.toFixed(dp));
+  currentModel=m;
+  document.querySelectorAll('.mbtn').forEach(b=>b.classList.toggle('active',b.dataset.m===m));
+  const md=MODELS[m];
+  document.getElementById('model-desc').innerHTML=md.desc;
+  document.getElementById('m-model-name').textContent=md.name;
+  document.getElementById('m-model-sub').textContent=md.sub;
+  document.getElementById('m-score-sub').textContent=md.scoreSub;
+  document.getElementById('thresh-label').textContent=md.threshLabel;
+  document.getElementById('tune-label').textContent=md.threshLabel;
+  thr=md.threshDefault;
+  ['thresh-slider','sens-slider'].forEach(id=>{
+    const el=document.getElementById(id);
+    el.min=md.threshMin;el.max=md.threshMax;el.step=md.threshStep;el.value=thr;
+  });
+  const dp=thr<5?2:0;
+  ['thresh-val','sens-val'].forEach(id=>document.getElementById(id).textContent=thr.toFixed(dp));
   renderFeats();updateLegend();resetState();
 }
+
 function resetState(){
-  cusumP=0;cusumN=0;ewmaStat=null;pcaBuffer=[];bayPChange=0;tData=[];aFlags=[];d0=[];d1=[];d2=[];d3=[];d4=[];d5=[];d6=[];alertCount=0;totalFired=0;alertLog=[];renderAlerts();
-  if(chart){chart.data.labels=[];chart.data.datasets.forEach(ds=>ds.data=[]);chart.update('none')}
-  document.getElementById('m-score').textContent='—';document.getElementById('m-alerts').textContent='0';document.getElementById('m-fpr').textContent='0%';document.getElementById('stream-badge').textContent='Nominal';document.getElementById('stream-badge').className='spill pill-nom';
+  cusumP=0;cusumN=0;ewmaStat=null;pcaBuffer=[];bayPChange=0;
+  tData=[];aFlags=[];d0=[];d1=[];d2=[];d3=[];d4=[];d5=[];d6=[];
+  alertCount=0;totalFired=0;alertLog=[];renderAlerts();
+  if(chart){
+    updateYAxis();
+    chart.data.labels=[];
+    chart.data.datasets.forEach(ds=>ds.data=[]);
+    chart.update('none');
+  }
+  document.getElementById('m-score').textContent='—';
+  document.getElementById('m-alerts').textContent='0';
+  document.getElementById('m-fpr').textContent='0%';
+  document.getElementById('stream-badge').textContent='Nominal';
+  document.getElementById('stream-badge').className='spill pill-nom';
 }
-function updateThresh(v){thr=parseFloat(v);const dp=thr<5?2:0;document.getElementById('thresh-val').textContent=thr.toFixed(dp);document.getElementById('sens-slider').value=v;document.getElementById('sens-val').textContent=thr.toFixed(dp);alertCount=0;totalFired=0;alertLog=[];renderAlerts()}
-function syncSliders(v){thr=parseFloat(v);const dp=thr<5?2:0;document.getElementById('thresh-slider').value=v;document.getElementById('thresh-val').textContent=thr.toFixed(dp);document.getElementById('sens-val').textContent=thr.toFixed(dp);alertCount=0;totalFired=0;alertLog=[];renderAlerts()}
+
+function updateThresh(v){
+  thr=parseFloat(v);const dp=thr<5?2:0;
+  document.getElementById('thresh-val').textContent=thr.toFixed(dp);
+  document.getElementById('sens-slider').value=v;
+  document.getElementById('sens-val').textContent=thr.toFixed(dp);
+  alertCount=0;totalFired=0;alertLog=[];renderAlerts();
+}
+function syncSliders(v){
+  thr=parseFloat(v);const dp=thr<5?2:0;
+  document.getElementById('thresh-slider').value=v;
+  document.getElementById('thresh-val').textContent=thr.toFixed(dp);
+  document.getElementById('sens-val').textContent=thr.toFixed(dp);
+  alertCount=0;totalFired=0;alertLog=[];renderAlerts();
+}
 function switchParam(){cp=document.getElementById('param-select').value;resetState()}
 function injectAnomaly(){injectNext=true}
 function resetSim(){resetState()}
+
 renderFeats();updateLegend();makeChart();setInterval(tick,900);
 </script>
+</body>
+</html>
